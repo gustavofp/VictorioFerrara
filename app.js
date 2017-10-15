@@ -82,6 +82,6 @@ const getTimeline = () => {
     );
 
 }
-//setInterval(() => { 
+setInterval(() => { 
     getTimeline()
-//}, 60000)
+}, 60000)
