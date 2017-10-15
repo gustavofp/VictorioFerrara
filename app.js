@@ -40,6 +40,15 @@ const verifyTweet = tweet => {
     }
 }
 
+const verifyReply = tweet => {
+    tweet = "Hoje carlinhos"
+    if(tweet.indexOf("@")){
+        return false
+    } else {
+        return true
+    }
+}
+
 const translateTweet = tweet => {
     return translate(tweet, {from: 'pt', to: 'it'})
     .then(res => res.text)
@@ -48,6 +57,7 @@ const translateTweet = tweet => {
 
 const getTimeline = () => {
     let isNewTweet = false
+    let isReply = false
     let tweet
 
     twitter.getTimeline("user_timeline", {
@@ -59,25 +69,19 @@ const getTimeline = () => {
         TOKEN,
         TOKEN_SECRET,
         (error, data, response) => {
-            if (!tweets.last){
-                tweets.last = data[0].text
-                translateTweet(data[0].text).then(res => {
-                    postStatus(res)
-                })
-            }else {
                 isNewTweet = verifyTweet(data[0].text)
-                if(isNewTweet){
+                isReply = verifyReply(data[0].text)
+
+                if(isNewTweet && !isReply){
                     translateTweet(data[0].text).then(res => {
-                        postStatus(res)
-                        tweets.last = data[0].text
+                         postStatus(res)
+                         tweets.last = data[0].text
                     })
                 }
-
-            }
         }
     );
 
 }
-setInterval(() => { 
+//setInterval(() => { 
     getTimeline()
-}, 60000)
+//}, 60000)
