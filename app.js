@@ -68,10 +68,10 @@ const getTimeline = () => {
         TOKEN,
         TOKEN_SECRET,
         (error, data, response) => {
-                isNewTweet = verifyTweet(data[0].text)
+                //isNewTweet = verifyTweet(data[0].text)
                 isReply = verifyReply(data[0].text)
 
-                if(isNewTweet && !isReply){
+                if(!isReply){
                     translateTweet(data[0].text).then(res => {
                          postStatus(res)
                          tweets.last = data[0].text
