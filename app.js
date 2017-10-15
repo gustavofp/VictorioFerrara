@@ -41,7 +41,6 @@ const verifyTweet = tweet => {
 }
 
 const verifyReply = tweet => {
-    tweet = "Hoje carlinhos"
     if(tweet.indexOf("@")){
         return false
     } else {
